@@ -36,9 +36,9 @@ public class ProductController {
 	@GetMapping("/product/{Id}")
 	public Optional<Product> getProductById(@PathVariable long Id) {
 
-		Optional<Product> product=productService.getProductById(Id);
+		Optional<Product> productbyid=productService.getProductById(Id);
 
-		return product;
+		return productbyid;
 	}
 
 	@GetMapping("/viewProducts")

@@ -2,6 +2,19 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
 	<title>User Profile</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+	 <!-- Bootstrap core CSS -->
+	 <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+
+	 <!-- Additional CSS Files -->
+	 <link th:href="@{/css/fontawesome.css}" rel="stylesheet" />
+	 <link th:href="@{/css/tooplate-main.css}" rel="stylesheet" />
+	 <link th:href="@{/css/owl.css}" rel="stylesheet" />
 	<!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Google Fonts -->
@@ -24,7 +37,7 @@
 	border: 2px solid;
 	margin-left: 20px;
 }
- .navbar navbar-expand-lg navbar-dark bg-secondary{
+ .navbar navbar-expand-lg navbar-dark bg-dark{
 background-color: grey;
 }
 
@@ -34,22 +47,55 @@ background-color: grey;
 }
 </style>
 </head>
-<body class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-		<a class="navbar-brand" href="/dashboard">Home</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNav" aria-controls="navbarNav"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav">
-				<li class="nav-item active"><a class="nav-link" href="/logout">Logout</a></li>
-				<li class="nav-item"><a class="nav-link" th:href="@{/profile/}+${session.id}">Profile</a></li>
-				<li class="nav-item"><a class="nav-link" href="/mycart">My Cart</a></li>
-			</ul>
+<body>
+<!-- Pre Header -->
+<div id="pre-header">
+	<div class="container">
+	  <div class="row">
+		<div class="col-md-12">
+		  <span>Profile Page</span>
 		</div>
-	</nav>
+	  </div>
+	</div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+	<div class="container">
+	  <a class="navbar-brand" href="#"><img th:src="@{/Images/updateaapslogo.png}" alt=""></a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarResponsive">
+		<ul class="navbar-nav ml-auto">
+		  <li class="nav-item active">
+			<a class="nav-link" href="/userIndex">Home 
+			</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" href="/productDashboard">Products</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" th:href="@{/profile/}+${session.id}">Profile<span class="sr-only">(current)</span></a>
+		  </li>
+			<li class="nav-item">
+		   <a class="nav-link" href="/mycart">My Cart</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" href="about.html">About Us</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" href="/contactUs">Contact Us</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" href="/logout">Log Out</a>
+		  </li>
+		  
+		</ul>
+	  </div>
+	</div>
+  </nav>
+
 	<div class="container">
      	<div class="row d-flex justify-content-center">
             <div class="col-md-10 mt-5 pt-5">
@@ -92,5 +138,38 @@ background-color: grey;
             </div>
         </div>
 	</div>
+
+	<!-- Footer Starts Here -->
+    <div class="footer">
+		<div class="container">
+		  <div class="row">
+			<div class="col-md-12">
+			  
+			</div>
+			<div class="col-md-12">
+			  
+			</div>
+			
+		  </div>
+		</div>
+	  </div>
+	  <!-- Footer Ends Here -->
+  
+  
+	  <!-- Sub Footer Starts Here -->
+	  <div class="sub-footer">
+		<div class="container">
+		  <div class="row">
+			<div class="col-md-12">
+			  <div class="copyright-text">
+				<p>Copyright &copy; 2021 AAPS
+				  
+				  - Design: <a rel="nofollow" href=""> AAPS</a></p>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <!-- Sub Footer Ends Here -->
 </body>
 </html>

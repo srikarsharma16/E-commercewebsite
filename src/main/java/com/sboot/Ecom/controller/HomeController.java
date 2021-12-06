@@ -50,6 +50,7 @@ public class HomeController {
 		
 		return modelAndView;
 	}
+
 	
 	@GetMapping("/adminLogout")
 	public ModelAndView getLogoutPage() {
@@ -67,7 +68,7 @@ public class HomeController {
 		long id=customer.getCustId();
 		if(isLogin) {
 			session.setAttribute("id", id);
-			return "redirect:/dashboard";
+			return "redirect:/userIndex";
 		}
 		else {
 			return "redirect:/login";
@@ -113,7 +114,7 @@ public class HomeController {
 		
 		customerService.edit(customer,(long)session.getAttribute("id"));
 		
-		return "redirect:/dashboard";
+		return "redirect:/userIndex";
 	}
 	
 	@GetMapping("/payment")
@@ -161,6 +162,46 @@ public class HomeController {
 		
 		return modelAndView;
 	}
+	@GetMapping("/userIndex")
+	public ModelAndView getUserIndex() {
+		ModelAndView modelAndView =new ModelAndView("userIndex");
+		
+		List<Product> allProducts=productService.getAllProducts();
+		Optional<Product> p=productService.getProductById(1);
+		
+		modelAndView.addObject("allProducts",allProducts);
+		modelAndView.addObject("p",p);
+		
+		return modelAndView;
+	}
+
+	@GetMapping("/productDashboard")
+	public ModelAndView getproductDashboard() {
+		ModelAndView modelAndView = new ModelAndView("productDashboard");
+
+		List<Product> allProducts=productService.getAllProducts();
+		Optional<Product> p=productService.getProductById(1);
+		
+		modelAndView.addObject("allProducts",allProducts);
+		modelAndView.addObject("p",p);
+		
+		return modelAndView;
+
+	}
+
+	@GetMapping("/singleProduct/{id}")
+	public ModelAndView getsingleProduct(@PathVariable long id) {
+		ModelAndView modelAndView = new ModelAndView("single-product");
+
+		//List<Product> allProducts=productService.getAllProducts();
+		Product productbyid=productService.getProductById(id).get();
+		
+		modelAndView.addObject("productbyid", productbyid);
+		//modelAndView.addObject("allProducts",allProducts);
+		return modelAndView;
+
+	}
+
 	
 	@GetMapping("/mycart")
 	public ModelAndView getCartPage(HttpSession session) {
@@ -234,5 +275,12 @@ public class HomeController {
 		productService.add(product);
 		
 		return "redirect:/dashboard";
+	}
+
+	@GetMapping("/contactUs")
+	public ModelAndView getContactUs() {
+		ModelAndView modelAndView=new ModelAndView("contact");
+
+		return modelAndView;
 	}
 }
