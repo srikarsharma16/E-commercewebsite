@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.sboot.Ecom.dao.CartRepository;
 import com.sboot.Ecom.dao.CustomerRepository;
+import com.sboot.Ecom.global.Globaldata;
 import com.sboot.Ecom.model.Customer;
 
 @Service
@@ -71,6 +72,7 @@ public class CustomerService {
 
 			if (customer1.getCustEmail().equals(email) && customer1.getCustPassword().equals(password)) {
 				customer.setCustId(customer1.getCustId());
+				Globaldata.customerDetails.add(customer1);
 				return true;
 			}
 		}

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sboot.Ecom.model.Admin;
 import com.sboot.Ecom.model.Cart;
+import com.sboot.Ecom.model.CartProduct;
 import com.sboot.Ecom.model.Customer;
 import com.sboot.Ecom.model.Product;
 import com.sboot.Ecom.service.AdminService;
@@ -203,11 +204,13 @@ public class HomeController {
 	}
 
 	
+	//New
+	
 	@GetMapping("/mycart")
 	public ModelAndView getCartPage(HttpSession session) {
 		ModelAndView modelAndView =new ModelAndView("cart");
 		
-		Globaldata.cart.clear();
+		Globaldata.cartProducts.clear();
 		try {
 			
 		long custId=(long) session.getAttribute("id");
@@ -218,8 +221,18 @@ public class HomeController {
 		
 		for(Cart cart:car) {
 			prod11=cart.getProdId();
-
-			Globaldata.cart.add(productService.getProductById(prod11).get());
+			CartProduct c =new CartProduct();
+			Product p=new Product();
+			p=productService.getProductById(prod11).get();
+			c.setProdId(p.getProdId());
+			c.setProdName(p.getProdName());
+			c.setProdPrice(p.getProdPrice());
+			c.setProdDiscount(p.getProdDiscount());
+			c.setProdDesc(p.getProdDesc());
+			c.setProdImage(p.getProdImage());
+			//c.setGst(p.getGst());
+			c.setProdQuantity(cart.getProdquantity());
+			Globaldata.cartProducts.add(c);
 		}
 		
 		}catch(Exception e) {
@@ -229,23 +242,33 @@ public class HomeController {
 		Total=0;
 		numberOfItems=0;
 		finalAmount=0;
-		getTotalOfProducts(Globaldata.cart);
-		modelAndView.addObject("allCart", Globaldata.cart);
+		getTotalOfProducts(Globaldata.cartProducts);
+		modelAndView.addObject("allCart", Globaldata.cartProducts);
 		modelAndView.addObject("Total", Total);
 		modelAndView.addObject("numberOfItems", numberOfItems);
 		modelAndView.addObject("finalAmount", finalAmount);
 		return modelAndView;
 	}
 	
+	//New
 	
-	
-	private void getTotalOfProducts(List<Product> product) {
+	private void getTotalOfProducts(List<CartProduct> product) {
 		
-		for(Product p:product) {
-			numberOfItems++;
-			Total=Total+(p.getProdPrice()*(p.getProdDiscount()/100));
-			finalAmount=finalAmount+(p.getProdPrice()-(p.getProdPrice()*(p.getProdDiscount()/100)));
+		for(CartProduct p:product) {
+			numberOfItems=numberOfItems+p.getProdQuantity();
+			Total=Total+((p.getProdPrice()*(p.getProdDiscount()/100))*p.getProdQuantity());
+			finalAmount=finalAmount+((p.getProdPrice()-(p.getProdPrice()*(p.getProdDiscount()/100)))*p.getProdQuantity());
 		}
+	}
+
+	//New
+
+	@GetMapping("/updateQuantity/{quantity}/{prod_id}")
+	public String getUpdatedQuantity(@PathVariable int quantity,@PathVariable long prod_id,HttpSession session ){
+		
+		cartService.doUpdateQuantity(quantity,prod_id,(long)session.getAttribute("id"));
+
+		return "redirect:/mycart";
 	}
 
 	@GetMapping("/addProduct")
@@ -287,6 +310,36 @@ public class HomeController {
 	@GetMapping("/aboutPage")
 	public ModelAndView getAboutPage() {
 		ModelAndView modelAndView=new ModelAndView("about");
+
+		return modelAndView;
+	}
+
+	//New
+
+	@GetMapping("/buyCartItems")
+	public ModelAndView goToBilling(){
+		ModelAndView modelAndView = new ModelAndView("checkout");
+
+		Customer customer=Globaldata.customerDetails.get(0);
+		modelAndView.addObject("CustomerDetails",customer);
+		modelAndView.addObject("numberOfItems", numberOfItems);
+		modelAndView.addObject("finalAmount", finalAmount);
+
+		return modelAndView;
+	}
+
+	//New
+
+	@GetMapping("/buyItem/{quantity}/{prod_id}")
+	public ModelAndView sendItemToBilling(@PathVariable int quantity,@PathVariable long prod_id){
+		ModelAndView modelAndView = new ModelAndView("checkout");
+
+		Customer customer=Globaldata.customerDetails.get(0);
+		Product p=productService.getProductById(prod_id).get();
+		double total=quantity*(p.getProdPrice()-(p.getProdPrice()*(p.getProdDiscount()/100)));
+		modelAndView.addObject("CustomerDetails",customer);
+		modelAndView.addObject("numberOfItems", quantity);
+		modelAndView.addObject("finalAmount", total);
 
 		return modelAndView;
 	}

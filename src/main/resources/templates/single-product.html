@@ -124,19 +124,17 @@ https://www.tooplate.com/view/2114-pixie
               <h6><strong>Price:</strong> &#8377;<span th:text="${productbyid.prodPrice}"></span></h6>
               <p th:text="${productbyid.prodDesc}">Product Description</p>
               <span>7 left on stock</span>
+              <a th:href="@{/checkout/}+${productbyid.prodId}"><button> Buy now </button></a>
               <form action="#" th:action="@{/cart}"method="post">
                 <input type="hidden" name="custId" th:value="${session.id}">
                 <input type="hidden" name="prodId" th:value="${productbyid.prodId}">
-                <label for="quantity">Quantity:</label>
-                <input name="quantity" type="quantity" class="quantity-text" id="quantity" 
-                	onfocus="if(this.value == '1') { this.value = ''; }" 
-                    onBlur="if(this.value == '') { this.value = '1';}"
-                    value="1">
-                <input type="submit" class="button" value="Order Now!">
-            
+   
                 <input style="background-color: red;" type="submit" class="button" th:href="@{id=${productbyid.prodId}}" value="Add to cart">
 
               </form>
+              
+
+              
               <div class="down-content">
                 <div class="categories">
                   <h6>Category: <span><a href="/productDashboard">Handcrafted</a>,<a href="/productDashboard">Handmade Wall Art</a>,<a href="/productDashboard">Handcrafted Antique</a></span></h6>

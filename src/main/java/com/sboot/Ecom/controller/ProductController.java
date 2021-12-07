@@ -99,4 +99,16 @@ public class ProductController {
 		productService.delete(Id);
 		return "redirect:/viewProducts";
 	}
+
+	@GetMapping("/checkout/{prodId}")
+	public ModelAndView fetchProductBy(@PathVariable long prodId){
+
+		ModelAndView modelAndView = new ModelAndView("BuyNowDetails");
+
+		Product product = productService.getProductById(prodId).get();
+		
+		modelAndView.addObject("product",product);
+
+		return modelAndView;
+	}
 }

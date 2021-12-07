@@ -8,10 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
 
 @Entity
 @IdClass(Cart.class)
@@ -28,6 +25,8 @@ public class Cart implements Serializable{
 	@Id
 	@Column(name="prod_Id")
 	private long prodId;
+
+	private int prodquantity;
 	
 	public long getCartId() {
 		return cartId;
@@ -47,10 +46,18 @@ public class Cart implements Serializable{
 	public void setProdId(long prodId) {
 		this.prodId = prodId;
 	}
+	public int getProdquantity() {
+		return prodquantity;
+	}
+	public void setProdquantity(int prodquantity) {
+		this.prodquantity = prodquantity;
+	}
 	@Override
 	public String toString() {
-		return "Cart [cartId=" + cartId + ", custId=" + custId + ", prodId=" + prodId + "]";
+		return "Cart [cartId=" + cartId + ", custId=" + custId + ", prodId=" + prodId + ", prodquantity=" + prodquantity
+				+ "]";
 	}
+	
 	
 	
 }

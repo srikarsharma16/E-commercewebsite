@@ -5,19 +5,6 @@
 <head>
 
 	<title>Shopping Cart</title>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
-	<!-- Bootstrap core CSS -->
-	<link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-
-
-	<!-- Additional CSS Files -->
-	<link th:href="@{/css/fontawesome.css}" rel="stylesheet" />
-	<link th:href="@{/css/tooplate-main.css}" rel="stylesheet" />
-	<link th:href="@{/css/owl.css}" rel="stylesheet" />
 
 	<link rel="stylesheet" type="text/css" href="cart.css">
 
@@ -343,31 +330,33 @@
 
 
 <body>
-<!-- Pre Header -->
-<div id="pre-header">
-	<div class="container">
-	  <div class="row">
-		<div class="col-md-12">
-		  <span>Shopping Cart</span>
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+		<a class="navbar-brand" href="/dashboard">Home</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item active"><a class="nav-link" href="/logout">Logout</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/profile/}+${session.id}">Profile</a></li>
+				<li class="nav-item"><a class="nav-link" href="/mycart">My Cart</a></li>
+			</ul>
 		</div>
-	  </div>
-	</div>
-  </div>
-
-  <!-- Navigation -->
- 
+	</nav>
 
 
 
 <div class="container">
 
-	
+	<h1>Shopping Cart</h1>
 
 	<div class="cart">
 
 		<div class="products">
 
-			<div class="product" style="border-radius: 5px;" th:each="product : ${allCart}">
+			<div class="product" style="border-radius: 5px;">
 
 			<div style="margin: auto; width:50%; height:100%;">
 				<img src="bag1.jpg" style="width: 100%; height: 100%;" th:src="*{'data:image/jpeg;base64,'+{product.prodImage}}" >
@@ -380,45 +369,26 @@
 
 					<h4 class="product-offer" ><span th:text="${product.prodDiscount}">40%</span><span>&#37;</span></h4>
 
+					<p class="product-quantity">Quantity: <input id="quan" type="number" name="prodQuantity" value="1" min="1" max="100" th:oninput="'javaScript:updateValue(this.value,' + ${product.prodPrice} + ',' + ${product.prodDiscount} + ');'">
 					
-					<p class="product-quantity">Quantity: <input id="quantity" type="number" name="prodQuantity" min="1" max="100" th:value="${product.prodQuantity}" th:oninput="'javaScript:UpdateValue(this.value,' + ${product.prodId} + ');'">
-
-							<script th:inline="JavaScript">
-								function UpdateValue(quanity,prodId){
-									
-									window.location.href = "http://localhost:9191/updateQuantity/"+quanity+"/"+prodId;
-								}
-							</script>
-
-						<form action="#" th:action="@{/deleteFromCart}" method="post">
-							
-							<input type="hidden" name="custId" th:value="${session.id}">
-							
-							<input type="hidden" name="prodId" th:value="${product.prodId}">
-						
-						<p class="product-remove">
-							
-							<i class="fa fa-trash" aria-hidden="true">
-							
-								<span class="remove"><input type="submit" value="Remove" style="background-color: transparent; border: none; color:white;"></span>
-						
-							</i>
-						
-						</p>
-						
-						</form>
-						<p class="product-remove" style="background-color: orange; margin-right: 125px;">
-							
-							<i class="trash" aria-hidden="true">
-							
-								<span class="remove"><a th:href="@{/checkout/}+${product.prodId}"><button style="background-color: transparent; border: none; color: #fff;"> Buy now </button></a></span>
-
-							</i>
-						
-						</p>
-					</p>
 				</div>
 
+				<script th:inline="javaScript">
+
+					var quantity=0;
+					function updateValue(val,price,discount){
+						quantity=val;
+						var Total_price = (price-(price*(discount/100)))*val;
+						var savedAmount = (price*(discount/100))*val;
+						document.getElementById("numberOfItems").innerHTML = val;
+						document.getElementById("total").innerHTML = Total_price;
+						document.getElementById("saved").innerHTML = savedAmount;
+					}
+
+					function SendDetails(val){
+					window.location.href="http://localhost:9191/buyItem/"+quantity+"/"+val;
+				}
+				</script>
 			</div>
 
 		</div>
@@ -429,7 +399,7 @@
 
 				<span>Total Price</span>
 
-				<span th:text="${finalAmount}"> 3,000</span>
+				<span id="total" th:text="${(product.prodPrice-(product.prodPrice*(product.prodDiscount/100)))}"> 3,000</span>
 
 			</p>
 
@@ -437,7 +407,7 @@
 
 				<span>Number of Items</span>
 
-				<span th:text="${numberOfItems}">2</span>
+				<span id="numberOfItems">1</span>
 
 			</p>
 
@@ -445,70 +415,17 @@
 
 				<span>You Save</span>
 
-				<strike><span style="color: red;" th:text="${#numbers.formatDecimal(Total,3,2,'POINT')}"> 1,000</span></strike>
+				<strike><span id="saved" style="color: red;" th:text="${#numbers.formatDecimal((product.prodPrice*(product.prodDiscount/100)),3,2,'POINT')}"> 1,000</span></strike>
 
 			</p>
-
-			<a href="/buyCartItems">Proceed to Checkout</a>
+			
+			<button th:onclick="'javaScript:SendDetails(' + ${product.prodId} + ');'">Proceed to Checkout</button>
 
 		</div>
 
 	</div>
 
 </div>
-
-<!-- Footer Starts Here -->
-<div class="footer">
-	<div class="container">
-	  <div class="row">
-		<div class="col-md-12">
-		  <div class="logo">
-			<img th:src="@{/Images/aapslogo.png}" alt="">
-		  </div>
-		</div>
-		<div class="col-md-12">
-			  
-		  <div class="footer-menu">
-			<ul>
-			  <li><a href="/userIndex">Home</a></li>
-			  <li><a href="/productDashboard">Products</a></li>
-			  <li><a th:href="@{/profile/}+${session.id}">Profile</a></li>
-			  <li><a href="/mycart">My Cart</a></li>
-			  <li><a href="/logout">Log Out</a></li>
-			</ul>
-		  </div>
-		</div>
-		<div class="col-md-12">
-		  <div class="social-icons">
-			<ul>
-			  <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-			  <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-			  <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-			  <li><a href="#"><i class="fa fa-rss"></i></a></li>
-			</ul>
-		  </div>
-		</div>
-	  </div>
-	</div>
-  </div>
-  <!-- Footer Ends Here -->
-
-
-  <!-- Sub Footer Starts Here -->
-  <div class="sub-footer">
-	<div class="container">
-	  <div class="row">
-		<div class="col-md-12">
-		  <div class="copyright-text">
-			<p>Copyright &copy; 2021 AAPS
-			  
-			  - Design: <a rel="nofollow" href=""> AAPS</a></p>
-		  </div>
-		</div>
-	  </div>
-	</div>
-  </div>
-  <!-- Sub Footer Ends Here -->
 
 
 
