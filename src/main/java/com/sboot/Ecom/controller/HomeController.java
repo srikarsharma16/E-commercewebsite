@@ -283,4 +283,11 @@ public class HomeController {
 
 		return modelAndView;
 	}
+
+	@GetMapping("/aboutPage")
+	public ModelAndView getAboutPage() {
+		ModelAndView modelAndView=new ModelAndView("about");
+
+		return modelAndView;
+	}
 }
