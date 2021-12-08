@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sboot.Ecom.model.Product;
-
-
+import com.sboot.Ecom.model.Address;
 import com.sboot.Ecom.model.CartProduct;
 import com.sboot.Ecom.model.Customer;
 
@@ -20,7 +19,14 @@ public class Globaldata {
 	public static List<CartProduct> cartProducts;
 	public static List<Customer> customerDetails;
 	public static List<CartProduct> tempCartProduct;
-	
+	public static int quantity;
+	public static int i;
+	public static long prod_id;
+	public static double total;
+	public static Address address;
+	static {
+		address=new Address();
+	}
 	static {
 		cartProducts=new ArrayList<CartProduct>();
 	}

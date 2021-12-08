@@ -318,11 +318,15 @@ public class HomeController {
 
 	@GetMapping("/buyCartItems")
 	public ModelAndView goToBilling(){
-		ModelAndView modelAndView = new ModelAndView("checkout");
-
+		ModelAndView modelAndView = new ModelAndView("deliveryAddress");
+		Globaldata.quantity=numberOfItems;
 		Customer customer=Globaldata.customerDetails.get(0);
+		Globaldata.i=1;
+		System.out.println("inside cart");
+
+		modelAndView.addObject("check",Globaldata.i);
 		modelAndView.addObject("CustomerDetails",customer);
-		modelAndView.addObject("numberOfItems", numberOfItems);
+		modelAndView.addObject("numberOfItems", Globaldata.quantity);
 		modelAndView.addObject("finalAmount", finalAmount);
 
 		return modelAndView;
@@ -332,14 +336,21 @@ public class HomeController {
 
 	@GetMapping("/buyItem/{quantity}/{prod_id}")
 	public ModelAndView sendItemToBilling(@PathVariable int quantity,@PathVariable long prod_id){
-		ModelAndView modelAndView = new ModelAndView("checkout");
+		ModelAndView modelAndView = new ModelAndView("deliveryAddress");
 
 		Customer customer=Globaldata.customerDetails.get(0);
 		Product p=productService.getProductById(prod_id).get();
-		double total=quantity*(p.getProdPrice()-(p.getProdPrice()*(p.getProdDiscount()/100)));
+		Total=quantity*(p.getProdPrice()-(p.getProdPrice()*(p.getProdDiscount()/100)));
+		System.out.println(quantity);
+		System.out.println(Total);
+		Globaldata.prod_id=prod_id;
+		Globaldata.quantity=quantity;
+		Globaldata.total=Total;
+		Globaldata.i=0;
+		System.out.println("outside cart");
 		modelAndView.addObject("CustomerDetails",customer);
-		modelAndView.addObject("numberOfItems", quantity);
-		modelAndView.addObject("finalAmount", total);
+		modelAndView.addObject("numberOfItems", Globaldata.quantity);
+		modelAndView.addObject("finalAmount", Globaldata.total);
 
 		return modelAndView;
 	}

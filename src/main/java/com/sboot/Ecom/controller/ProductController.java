@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sboot.Ecom.global.Globaldata;
 import com.sboot.Ecom.model.Product;
 import com.sboot.Ecom.service.ProductService;
 
@@ -104,7 +105,7 @@ public class ProductController {
 	public ModelAndView fetchProductBy(@PathVariable long prodId){
 
 		ModelAndView modelAndView = new ModelAndView("BuyNowDetails");
-
+		Globaldata.prod_id=prodId;
 		Product product = productService.getProductById(prodId).get();
 		
 		modelAndView.addObject("product",product);

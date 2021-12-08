@@ -389,7 +389,7 @@
 					}
 
 					function SendDetails(val){
-					window.location.href="http://localhost:9191/buyItem/"+quantity+"/"+val;
+					window.location.href="http://localhost:9090/buyItem/"+quantity+"/"+val;
 				}
 				</script>
 			</div>
@@ -423,7 +423,7 @@
 			</p>
 			
 			<button style="font: bold; font-size: large; width: 250px; height: 30px; border: none; background-color:deepskyblue; color: white;" th:onclick="'javaScript:SendDetails(' + ${product.prodId} + ');'">Proceed to Checkout</button>
-
+			<button th:onclick="'javaScript:SendDetails(' + ${product.prodId} + ');'">Provide Delivery Address</button>
 		</div>
 
 	</div>
