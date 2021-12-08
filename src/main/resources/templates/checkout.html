@@ -10,15 +10,33 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 
-    <title>Document</title>
+    <!-- Bootstrap core CSS -->
+	<link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+
+	<!-- Additional CSS Files -->
+	<link th:href="@{/css/fontawesome.css}" rel="stylesheet" />
+	<link th:href="@{/css/tooplate-main.css}" rel="stylesheet" />
+	<link th:href="@{/css/owl.css}" rel="stylesheet" />
+
+    <title>Checkout Page</title>
 </head>
 <body>
-
+<!-- Pre Header -->
+<div id="pre-header">
+	<div class="container">
+	  <div class="row">
+		<div class="col-md-12">
+		  <span>Checkout Page</span>
+		</div>
+	  </div>
+	</div>
+  </div>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-dark" >
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <img th:src="@{/images/logo.png}"  src="../static/images/logo.png" width="100" height="60" class="d-inline-block align-top" alt=""/>
+            <img th:src="@{/Images/aapslogo.png}"  src="../static/images/logo.png"  class="d-inline-block align-top" alt=""/>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8">
-   
+    <meta name="google-signin-client_id" content="644835167484-2jeus4u8kmrhb69sjg21cd21m7gsbgo1.apps.googleusercontent.com">
     <link rel="stylesheet" href="index.css">
    <title>Log In</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -295,7 +295,8 @@ myInput.onkeyup = function() {
   }
 }
 </script>
-   
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+  
    
    
    
@@ -339,6 +340,7 @@ myInput.onkeyup = function() {
               <div class="button input-box">
                 <input type="submit" value="Sumbit">
               </div>
+              <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
               <div class="text sign-up-text">Don't have an account? <label for="flip">Sigup now</label></div>
             </div>
         </form>
@@ -381,6 +383,8 @@ myInput.onkeyup = function() {
               <div class="button input-box">
                 <input type="submit" value="Sumbit">
               </div>
+             
+
               <div class="text sign-up-text">Already have an account? <label for="flip">Login now</label></div>
             </div>
       </form>
@@ -398,5 +402,16 @@ myInput.onkeyup = function() {
   
     </div>
   
+    <script>
+      function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+       
+
+      }
+    </script>
+
+
+
 </body>
 </html>

@@ -124,15 +124,15 @@ https://www.tooplate.com/view/2114-pixie
               <h6><strong>Price:</strong> &#8377;<span th:text="${productbyid.prodPrice}"></span></h6>
               <p th:text="${productbyid.prodDesc}">Product Description</p>
               <span>7 left on stock</span>
-              <a th:href="@{/checkout/}+${productbyid.prodId}"><button> Buy now </button></a>
+              
               <form action="#" th:action="@{/cart}"method="post">
                 <input type="hidden" name="custId" th:value="${session.id}">
                 <input type="hidden" name="prodId" th:value="${productbyid.prodId}">
    
-                <input style="background-color: red;" type="submit" class="button" th:href="@{id=${productbyid.prodId}}" value="Add to cart">
-
+                <input style="background-color:red; color: white; font-weight: bolder;" type="submit" class="button" th:href="@{id=${productbyid.prodId}}" value="Add to cart">
+                
               </form>
-              
+              <a th:href="@{/checkout/}+${productbyid.prodId}"><button style="position: absolute; top:175px; left: 200px; background-color:green; color: white; font-weight: bolder; border: none; width: 150px; height: 40px; border-radius: 6px"> BUY NOW </button></a>
 
               
               <div class="down-content">
