@@ -1,5 +1,6 @@
 package com.sboot.Ecom.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,11 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sboot.Ecom.model.Address;
 import com.sboot.Ecom.model.Admin;
 import com.sboot.Ecom.model.Cart;
 import com.sboot.Ecom.model.CartProduct;
 import com.sboot.Ecom.model.Customer;
+import com.sboot.Ecom.model.OrderDetails;
 import com.sboot.Ecom.model.Product;
+import com.sboot.Ecom.service.AddressService;
 import com.sboot.Ecom.service.AdminService;
 import com.sboot.Ecom.service.CartService;
 import com.sboot.Ecom.service.CustomerService;
@@ -37,6 +41,9 @@ public class HomeController {
 	
 	@Autowired
 	private CartService cartService;
+
+	@Autowired
+	private AddressService addressService;
 	
 	List<Product> prod_id;
 	
@@ -352,6 +359,88 @@ public class HomeController {
 		modelAndView.addObject("numberOfItems", Globaldata.quantity);
 		modelAndView.addObject("finalAmount", Globaldata.total);
 
+		return modelAndView;
+	}
+
+	@PostMapping("/address/{customerId}")
+    public ModelAndView addAddress(Address address,@PathVariable int customerId){
+		ModelAndView modelAndView =new ModelAndView("checkout");
+        Globaldata.address=address;
+        Address add=Globaldata.address;
+        int i=0;
+        if(Globaldata.i==1){
+            for (CartProduct c : Globaldata.cartProducts) {
+                
+
+                address.setCountry(add.getCountry());
+                address.setFullName(add.getFullName());
+                address.setMobileNumber(add.getMobileNumber());
+                address.setPinCode(add.getPinCode());
+                address.setLandmark(add.getLandmark());
+                address.setHouseNumber(add.getHouseNumber());
+                address.setCity(add.getCity());
+                address.setState(add.getState());
+                address.setAddressType(add.getAddressType());
+
+
+                address.setProdId(c.getProdId());
+                address.setPrice(c.getProdPrice());
+                address.setCustomerId(customerId);
+                address.setQuantity(c.getProdQuantity());
+                addressService.saveCustomerAddress(address);
+                address=new Address();
+                
+                
+                
+                i++;
+                System.out.println(i);
+            }
+            cartService.deleteByCustId(customerId);
+			modelAndView.addObject("numberOfItems", Globaldata.quantity);
+			modelAndView.addObject("finalAmount", finalAmount);
+
+        }else{
+            address.setProdId(Globaldata.prod_id);
+            address.setPrice(Globaldata.total);
+            address.setQuantity(Globaldata.quantity);
+            address.setCustomerId(customerId);
+            addressService.saveCustomerAddress(address);
+			modelAndView.addObject("numberOfItems", Globaldata.quantity);
+			modelAndView.addObject("finalAmount", Total);
+
+        }
+        
+        
+		
+		
+        return modelAndView;
+    }
+
+	@GetMapping("/orderPage/{custId}")
+	public ModelAndView getOrderPage(@PathVariable int custId) {
+		ModelAndView modelAndView=new ModelAndView("viewOrders");
+		int cs= custId;
+		List<Address> a =  addressService.fetchByCustomerId();
+		List<Address> ad = new ArrayList<Address>();
+		OrderDetails o=new OrderDetails();
+		Globaldata.order.clear();
+		
+		for (Address address : a) {
+			if(address.getCustomerId()==cs){
+				ad.add(address);
+			}
+		}
+
+		for (Address address : ad) {
+			Product p=productService.getProductById(address.getProdId()).get();
+			o.setProdImage(p.getProdImage());
+			o.setProdName(p.getProdName());
+			o.setProdPrice(p.getProdPrice());
+			o.setProdQuantity(address.getQuantity());
+			Globaldata.order.add(o);
+		}
+
+		modelAndView.addObject("allProducts", Globaldata.order);
 		return modelAndView;
 	}
 }

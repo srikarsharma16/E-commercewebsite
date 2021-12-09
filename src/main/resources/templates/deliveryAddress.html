@@ -11,17 +11,39 @@
         integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
         crossorigin="anonymous" />
   <!-- Bootstrap CSS Local -->
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/bootstrap-drawer.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/custom.css}" rel="stylesheet" />
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <!-- Drawer CSS File -->
   <link rel="stylesheet" href="css/bootstrap-drawer.min.css">
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/custom.css">
+  <!-- Bootstrap core CSS -->
+	<link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+
+	<!-- Additional CSS Files -->
+	<link th:href="@{/css/fontawesome.css}" rel="stylesheet" />
+	<link th:href="@{/css/tooplate-main.css}" rel="stylesheet" />
+	<link th:href="@{/css/owl.css}" rel="stylesheet" />
 
 </head>
 
 <body>
 
+<!-- Pre Header -->
+<div id="pre-header">
+	<div class="container">
+	  <div class="row">
+		<div class="col-md-12">
+		  <span>Address</span>
+		</div>
+	  </div>
+	</div>
+  </div>
 
+  <!-- Navigation -->
 <!-- New Address Form Starts -->
 <div class="container mt-5 mb-5">
 
@@ -202,6 +224,21 @@
     }, false);
   })();
 </script>
+<!-- Sub Footer Starts Here -->
+<div class="sub-footer">
+	<div class="container">
+	  <div class="row">
+		<div class="col-md-12">
+		  <div class="copyright-text">
+			<p>Copyright &copy; 2021 AAPS
+			  
+			  - Design: <a rel="nofollow" href=""> AAPS</a></p>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+  <!-- Sub Footer Ends Here -->
 </body>
 
 </html>

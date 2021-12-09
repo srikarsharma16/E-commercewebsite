@@ -5,6 +5,9 @@ import com.sboot.Ecom.model.Address;
 import com.sboot.Ecom.model.CartProduct;
 import com.sboot.Ecom.model.Customer;
 import com.sboot.Ecom.service.AddressService;
+import com.sboot.Ecom.service.CartService;
+import com.sboot.Ecom.service.CustomerService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +20,9 @@ public class AddressController {
 
     @Autowired
     private AddressService addressService;
+    
+    @Autowired
+    private CartService cartService;
 
     @GetMapping("/deliveryAddress")
     public ModelAndView routToAddressPage() {
@@ -26,6 +32,7 @@ public class AddressController {
         return modelAndView;
     }
 
+    /*
     @PostMapping("/address/{customerId}")
     public ModelAndView addAddress(Address address,@PathVariable int customerId){
         Globaldata.address=address;
@@ -58,6 +65,7 @@ public class AddressController {
                 i++;
                 System.out.println(i);
             }
+            cartService.deleteByCustId(customerId);
 
         }else{
             address.setProdId(Globaldata.prod_id);
@@ -68,7 +76,8 @@ public class AddressController {
 
         }
         
-        ModelAndView modelAndView =new ModelAndView("payment");
+        ModelAndView modelAndView =new ModelAndView("checkout");
         return modelAndView;
     }
+    */
 }

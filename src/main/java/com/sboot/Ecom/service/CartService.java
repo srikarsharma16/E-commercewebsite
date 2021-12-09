@@ -59,4 +59,8 @@ public class CartService {
 		cartRepository.doUpdateQuantity(quantity,prod_id,l);
     }
 
+    public void deleteByCustId(int customerId) {
+		cartRepository.delByCustId((long) customerId);
+    }
+
 }

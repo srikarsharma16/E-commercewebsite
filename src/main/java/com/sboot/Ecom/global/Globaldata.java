@@ -7,6 +7,7 @@ import com.sboot.Ecom.model.Product;
 import com.sboot.Ecom.model.Address;
 import com.sboot.Ecom.model.CartProduct;
 import com.sboot.Ecom.model.Customer;
+import com.sboot.Ecom.model.OrderDetails;
 
 public class Globaldata {
 
@@ -14,6 +15,11 @@ public class Globaldata {
 	
 	static {
 		cart=new ArrayList<Product>();
+	}
+
+	public static List<OrderDetails> order;
+	static{
+		order=new ArrayList<OrderDetails>();
 	}
 
 	public static List<CartProduct> cartProducts;

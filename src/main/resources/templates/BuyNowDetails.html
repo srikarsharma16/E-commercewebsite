@@ -422,8 +422,8 @@
 
 			</p>
 			
-			<button style="font: bold; font-size: large; width: 250px; height: 30px; border: none; background-color:deepskyblue; color: white;" th:onclick="'javaScript:SendDetails(' + ${product.prodId} + ');'">Proceed to Checkout</button>
-			<button th:onclick="'javaScript:SendDetails(' + ${product.prodId} + ');'">Provide Delivery Address</button>
+			<!--<button style="font: bold; font-size: large; width: 250px; height: 30px; border: none; background-color:deepskyblue; color: white;" th:onclick="'javaScript:SendDetails(' + ${product.prodId} + ');'">Proceed to Checkout</button>-->
+			<button style="font: bold; font-size: large;" th:onclick="'javaScript:SendDetails(' + ${product.prodId} + ');'" class="btn btn-success">Proceed to Checkout</button>
 		</div>
 
 	</div>

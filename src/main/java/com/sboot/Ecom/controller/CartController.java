@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sboot.Ecom.global.Globaldata;
 import com.sboot.Ecom.model.Cart;
+import com.sboot.Ecom.model.CartProduct;
 import com.sboot.Ecom.model.Customer;
 import com.sboot.Ecom.model.Product;
 import com.sboot.Ecom.service.CartService;
@@ -27,6 +29,8 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 
+	int check;
+
 	@GetMapping("/cart/{Id}")
 	public ModelAndView getCartItemsById(@PathVariable long Id) {
 		ModelAndView modelAndView =new ModelAndView("dashboard");
@@ -36,8 +40,16 @@ public class CartController {
 	
 	@PostMapping("/cart")
 	public String doregistration(Cart cart) {
+		check=0;
+		for (CartProduct c : Globaldata.cartProducts) {
+			if(cart.getProdId()==c.getProdId()){
+				check=1;
+			}
+		}
 		
-		cartService.add(cart);
+		if(check!=1){
+			cartService.add(cart);
+		}
 		
 		return "redirect:/mycart";
 	}

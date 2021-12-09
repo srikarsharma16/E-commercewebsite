@@ -90,12 +90,7 @@ https://www.tooplate.com/view/2114-pixie
               <h1>Featured Items</h1>
             </div>
           </div>
-          <div class="col-md-8 col-sm-12">
-            <div id="filters" class="button-group">
-              <button class="btn btn-primary" data-filter="*">All Products</button>
-              
-            </div>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -104,12 +99,14 @@ https://www.tooplate.com/view/2114-pixie
 
         <div class="row posts">
             <div id="1" class="item new col-md-4" th:each="product : ${allProducts}">
-              <a th:href="@{/singleProduct/}+${product.prodId}"> 
+              
                 
                 <div class="featured-item">
                   <img alt="" style="height: 150px; width: 100%;" th:src="*{'data:image/jpeg;base64,'+{product.prodImage}}" />
                   <h4 th:text="${product.prodName}">Product Name</h4>
                   <h6><strong>Price:</strong> &#8377;<span th:text="${product.prodPrice}"></span></h6>
+                  <h6><strong>Quantity:</strong> <span th:text="${product.prodQuantity}"></span></h6>
+                  
                 </div>
               </a>
             </div>
