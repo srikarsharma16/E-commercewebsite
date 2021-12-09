@@ -370,8 +370,10 @@ public class HomeController {
         int i=0;
         if(Globaldata.i==1){
             for (CartProduct c : Globaldata.cartProducts) {
-                
-
+                double quantity=(double)c.getProdQuantity();
+				double price=c.getProdPrice();
+				double discount=c.getProdDiscount();
+				double totalprice=quantity*(price-(price*(discount/100)));
                 address.setCountry(add.getCountry());
                 address.setFullName(add.getFullName());
                 address.setMobileNumber(add.getMobileNumber());
@@ -384,7 +386,7 @@ public class HomeController {
 
 
                 address.setProdId(c.getProdId());
-                address.setPrice(c.getProdPrice());
+                address.setPrice(totalprice);
                 address.setCustomerId(customerId);
                 address.setQuantity(c.getProdQuantity());
                 addressService.saveCustomerAddress(address);
@@ -435,7 +437,7 @@ public class HomeController {
 			Product p=productService.getProductById(address.getProdId()).get();
 			o.setProdImage(p.getProdImage());
 			o.setProdName(p.getProdName());
-			o.setProdPrice(p.getProdPrice());
+			o.setProdPrice(address.getPrice());
 			o.setProdQuantity(address.getQuantity());
 			Globaldata.order.add(o);
 		}
