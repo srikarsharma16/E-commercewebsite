@@ -440,6 +440,7 @@ public class HomeController {
 			o.setProdPrice(address.getPrice());
 			o.setProdQuantity(address.getQuantity());
 			Globaldata.order.add(o);
+			o = new OrderDetails();
 		}
 
 		modelAndView.addObject("allProducts", Globaldata.order);

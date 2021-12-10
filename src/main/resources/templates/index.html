@@ -282,7 +282,7 @@ body { padding: 2em; }
 .loginBtn--facebook:before {
   border-right: #364e92 1px solid;
   background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_facebook.png') 6px 6px no-repeat;
-  background: url('https://www.facebook.com/login/');
+  background-attachment: url('https://www.facebook.com/login/');
 }
 .loginBtn--facebook:hover,
 .loginBtn--facebook:focus {
@@ -347,6 +347,7 @@ myInput.onkeyup = function() {
     length.classList.add("invalid");
   }
 }
+
 </script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
    
@@ -390,7 +391,9 @@ myInput.onkeyup = function() {
                 <input type="submit" value="Sumbit">
               </div>
               <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-              <div class="fb-login-button" data-show-faces="false" data-width="200" data-max-rows="1"></div>
+              <button class="loginBtn loginBtn--facebook"><a style="color: white;" href="https://www.facebook.com/login/">Login with Facebook</a>
+                
+              </button>
               
               <div class="text sign-up-text">Don't have an account? <label for="flip">Sigup now</label></div>
             </div>
@@ -429,12 +432,14 @@ myInput.onkeyup = function() {
                 <i class="fas fa-lock"></i>
                 <input type="password" placeholder="Confirm password" name="custConfPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
               </div>
+              
              
 
               <div class="button input-box">
                 <input type="submit" value="Sumbit">
               </div>
              
+            
 
               <div class="text sign-up-text">Already have an account? <label for="flip">Login now</label></div>
             </div>
