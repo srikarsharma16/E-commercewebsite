@@ -3,10 +3,13 @@ package com.sboot.Ecom.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import org.springframework.mail.javamail.JavaMailSender;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,12 +32,17 @@ import com.sboot.Ecom.service.CustomerService;
 import com.sboot.Ecom.service.ProductService;
 
 import com.sboot.Ecom.global.Globaldata;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class HomeController {
 
 	@Autowired
 	private CustomerService customerService;
+
+	@Autowired
+    private JavaMailSender javaMailSender;
 	
 	@Autowired
 	private ProductService productService;
@@ -446,4 +454,32 @@ public class HomeController {
 		modelAndView.addObject("allProducts", Globaldata.order);
 		return modelAndView;
 	}
+
+	@PostMapping("/sendMail")
+	public ModelAndView getMethodName(Customer c) {
+		ModelAndView modelAndView=new ModelAndView("index");
+		
+		Random r=new Random();
+		String s=String.format("%04d", r.nextInt(10000));
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setTo(c.getCustEmail());
+	
+		msg.setSubject("Authentication code");
+		msg.setText("Auth code:"+s+" \n \t This code will xpire in 30sec");
+		try{
+			javaMailSender.send(msg);
+		}
+		catch(Exception e){
+			modelAndView=new ModelAndView("index");
+		}
+	
+		return modelAndView;
+	}
+
+	@GetMapping("/checkotp/{otp}")
+	public void checkout(@PathVariable String s){
+
+		System.out.println(s);
+	}
+	
 }
